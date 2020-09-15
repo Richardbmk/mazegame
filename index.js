@@ -1,5 +1,11 @@
 // Accessing objects from the library Matterjs
-const { Engine, Render, Runner, World, Bodies, MouseConstraint, Mouse } = Matter;
+const { 
+    Engine,
+    Render,
+    Runner,
+    World,
+    Bodies
+ } = Matter;
 
 // Variable definiton
 width = 800;
@@ -16,7 +22,7 @@ const render = Render.create({
     element: document.body,
     engine: engine,
     options: {
-        wireframes: false,
+        wireframes: true,
         width,
         height
     }
@@ -26,30 +32,27 @@ const render = Render.create({
 Render.run(render);
 Runner.run(Runner.create(), engine);
 
-// move objects in the world
-World.add(world, MouseConstraint.create(engine, {
-    mouse: Mouse.create(render.canvas)
-}))
-
 // Walls
 const walls = [
-    Bodies.rectangle(400, 0, 800, 40, {isStatic: true}),
-    Bodies.rectangle(400, 600, 800, 40, {isStatic: true}),
-    Bodies.rectangle(0, 300, 40, 600, {isStatic: true}),
-    Bodies.rectangle(800, 300, 40, 600, {isStatic: true}),
+    Bodies.rectangle(width / 2, 0, width, 40, {isStatic: true}),
+    Bodies.rectangle(width / 2, height, width, 40, {isStatic: true}),
+    Bodies.rectangle(0, height / 2, 40, height, {isStatic: true}),
+    Bodies.rectangle(width, height / 2, 40, height, {isStatic: true}),
     ];
 
 World.add(world, walls);
 
-for (let i = 0; i < 50; i++){
-    if (Math.random() > 0.5) {
-        World.add(world, Bodies.rectangle(Math.random() * width, Math.random() * height, 50, 50));
-    } else {
-        World.add(world, Bodies.circle(Math.random() * width, Math.random() * height, 35, {
-            render: {
-                fillStyle: '#f0a500'
-            }
-        }));
+
+// Maze generazion
+const grid = [];
+
+for (let i = 0; i < 3; i++) {
+    grid.push([]);
+    for (let j = 0; j < 3; j++) {
+        grid[i].push(false)
     }
-    
 }
+
+console.log(grid);
+
+
