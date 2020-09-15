@@ -10,6 +10,7 @@ const {
 // Variable definiton
 width = 800;
 height = 600;
+cells = 5;
 
 
 // Create the engine
@@ -44,15 +45,14 @@ World.add(world, walls);
 
 
 // Maze generazion
-const grid = [];
+const grid = Array(cells).fill(null).map(() => Array(cells).fill(false))
 
-for (let i = 0; i < 3; i++) {
-    grid.push([]);
-    for (let j = 0; j < 3; j++) {
-        grid[i].push(false)
-    }
-}
+const verticals = Array(cells).fill(null).map(() => Array(cells - 1).fill(false))
+
+const horizontals = Array(cells - 1).fill(null).map(() => Array(cells).fill(false))
 
 console.log(grid);
+console.log(verticals);
+console.log(horizontals);
 
 
