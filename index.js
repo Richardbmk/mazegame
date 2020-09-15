@@ -10,7 +10,7 @@ const {
 // Variable definiton
 width = 800;
 height = 600;
-cells = 5;
+cells = 3;
 
 
 // Create the engine
@@ -51,8 +51,22 @@ const verticals = Array(cells).fill(null).map(() => Array(cells - 1).fill(false)
 
 const horizontals = Array(cells - 1).fill(null).map(() => Array(cells).fill(false))
 
+const startRow = Math.floor(Math.random() * cells);
+const startColumn = Math.floor(Math.random() * cells);
+
+const movingThrougCells = (row, column) => {
+    // If we already visited this cells at [row, column], then return 
+    if (grid[row][column]) {
+        return;
+    }
+
+    // Mark the cells as visited
+    grid[row][column] = true;
+};
+
+movingThrougCells(startRow, startColumn);
 console.log(grid);
-console.log(verticals);
-console.log(horizontals);
+
+
 
 
