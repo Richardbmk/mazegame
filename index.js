@@ -45,6 +45,25 @@ World.add(world, walls);
 
 
 // Maze generazion
+
+const shuffle = (arr) => {
+    let counter = arr.length;
+
+    while (counter > 0) {
+        const index = Math.floor(Math.random() * counter);
+
+        counter--;
+
+        const temp = arr[counter];
+        arr[counter] = arr[index];
+        arr[index] = temp;
+    }
+    return arr;
+}
+
+
+
+
 const grid = Array(cells).fill(null).map(() => Array(cells).fill(false))
 
 const verticals = Array(cells).fill(null).map(() => Array(cells - 1).fill(false))
@@ -62,10 +81,40 @@ const movingThrougCells = (row, column) => {
 
     // Mark the cells as visited
     grid[row][column] = true;
+
+    // Assemble randomly-ordered list of neighbors
+    const neighbors = shuffle([
+        [row - 1, column, 'up'],
+        [row, column + 1, 'right'],
+        [row + 1, column, 'down'],
+        [row, column - 1, 'left']
+    ]);
+
+    // An acction for each neighbor i have around me...
+    for (let neighbor of neighbors) {
+        const [nextRow, nextColumn, direction] = neighbor;
+
+        // Check out if the neighbor is in the bounderies
+        if (nextRow < 0 || nextRow >= cells || nextColumn < 0 || nextColumn >= cells) {
+            continue;
+        }
+
+        // If we have visited that neighbor, continue to next neighbor 
+        if (grid[nextRow][nextColumn]){
+            continue;
+        }
+
+        // moving and removing verticals and horizontals cells
+    }
+
+        // Visit that next cell
+    
+
+    console.log(neighbors);
 };
 
-movingThrougCells(startRow, startColumn);
-console.log(grid);
+movingThrougCells(1, 1);
+
 
 
 
