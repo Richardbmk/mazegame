@@ -64,11 +64,11 @@ const shuffle = (arr) => {
 
 
 
-const grid = Array(cells).fill(null).map(() => Array(cells).fill(false))
+const grid = Array(cells).fill(null).map(() => Array(cells).fill(false));
 
-const verticals = Array(cells).fill(null).map(() => Array(cells - 1).fill(false))
+const verticals = Array(cells).fill(null).map(() => Array(cells - 1).fill(false));
 
-const horizontals = Array(cells - 1).fill(null).map(() => Array(cells).fill(false))
+const horizontals = Array(cells - 1).fill(null).map(() => Array(cells).fill(false));
 
 const startRow = Math.floor(Math.random() * cells);
 const startColumn = Math.floor(Math.random() * cells);
@@ -92,10 +92,16 @@ const movingThrougCells = (row, column) => {
 
     // An acction for each neighbor i have around me...
     for (let neighbor of neighbors) {
+            // Destructuring
         const [nextRow, nextColumn, direction] = neighbor;
 
         // Check out if the neighbor is in the bounderies
-        if (nextRow < 0 || nextRow >= cells || nextColumn < 0 || nextColumn >= cells) {
+        if (
+            nextRow < 0 ||
+            nextRow >= cells ||
+            nextColumn < 0 ||
+            nextColumn >= cells
+           ) {
             continue;
         }
 
@@ -105,15 +111,27 @@ const movingThrougCells = (row, column) => {
         }
 
         // moving and removing verticals and horizontals cells
-    }
+            // Horizontal moves
+            if (direction === 'left') {
+                verticals[row][column - 1] = true;
+            } else if (direction === 'right') {
+                verticals[row][column] = true;
+            // Verticals moves
+            } else if (direction === 'up') {
+                horizontals[row - 1][column] = true;
+            } else if (direction === 'down') {
+                horizontals[row][column] = true;
+            }
+            movingThrougCells(startRow, startColumn);
+        }
 
         // Visit that next cell
     
 
-    console.log(neighbors);
+    // console.log(neighbors);
 };
 
-movingThrougCells(1, 1);
+movingThrougCells(startRow, startColumn);
 
 
 
