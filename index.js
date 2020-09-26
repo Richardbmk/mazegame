@@ -4,13 +4,15 @@ const {
     Render,
     Runner,
     World,
-    Bodies
+    Bodies, 
+    Body,
+    Events
  } = Matter;
 
 // Variable definiton
 width = 600;
 height = 600;
-cells = 10;
+cells = 3;
 
 // Length of the cell
 const unitLength = width / cells;
@@ -18,6 +20,9 @@ const unitLength = width / cells;
 
 // Create the engine
 const engine = Engine.create();
+
+// Disable gravity
+engine.world.gravity.y = 0;
 
 const { world } = engine;
 
@@ -38,10 +43,10 @@ Runner.run(Runner.create(), engine);
 
 // Walls
 const walls = [
-    Bodies.rectangle(width / 2, 0, width, 40, {isStatic: true}),
-    Bodies.rectangle(width / 2, height, width, 40, {isStatic: true}),
-    Bodies.rectangle(0, height / 2, 40, height, {isStatic: true}),
-    Bodies.rectangle(width, height / 2, 40, height, {isStatic: true}),
+    Bodies.rectangle(width / 2, 0, width, 2, {isStatic: true}),
+    Bodies.rectangle(width / 2, height, width, 2, {isStatic: true}),
+    Bodies.rectangle(0, height / 2, 2, height, {isStatic: true}),
+    Bodies.rectangle(width, height / 2, 2, height, {isStatic: true}),
     ];
 
 World.add(world, walls);
@@ -155,13 +160,6 @@ horizontals.forEach((row, rowIndex) => {
     });
 });
 
-
-
-
-
-
-
-
 // Generating verticals walls randomly
 verticals.forEach((row, rowIndex) => {
     console.log(row, rowIndex);
@@ -182,6 +180,71 @@ verticals.forEach((row, rowIndex) => {
         World.add(world, wall);
     });
 });
+
+// Drawing the goal of the maze
+const goal = Bodies.rectangle(
+    width - unitLength / 2,
+    height - unitLength / 2,
+    unitLength * 0.7,
+    unitLength * 0.7,
+    {
+        label: 'goal',
+        isStatic: true
+    }
+);
+World.add(world, goal);
+
+// Drawing the ball of the maze
+const ball = Bodies.circle(
+    unitLength / 2, 
+    unitLength / 2, 
+    unitLength / 4,
+    {
+        label: 'ball'
+    }
+);
+
+World.add(world, ball);
+
+document.addEventListener('keydown', e => {
+    const {x, y} = ball.velocity;
+    console.log(x,y);
+    if (e.key === 'w') {
+        // console.log('move up');
+        Body.setVelocity(ball, {x, y: y - 5});
+    }
+
+    if (e.key === 'd') {
+        // console.log('move right');
+        Body.setVelocity(ball, {x: x + 5, y});
+    }
+
+    if (e.key === 'a') {
+        // console.log('move left');
+        Body.setVelocity(ball, {x: x - 5, y});
+    }
+
+    if (e.key === 's') {
+        // console.log('move down');
+        Body.setVelocity(ball, {x, y: y + 5});
+    }
+});
+
+Events.on(engine, 'collisionStart', e => {
+    // console.log(e);
+    e.pairs.forEach((collision) => {
+        // console.log(collision);
+        const labels = ['ball', 'goal'];
+
+        if (
+            labels.includes(collision.bodyA.label) &&
+            labels.includes(collision.bodyB.label)
+        ) {
+            console.log('You just won the Maze game!')
+        }
+    });
+});
+
 
 
 
