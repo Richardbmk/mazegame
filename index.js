@@ -10,8 +10,8 @@ const {
  } = Matter;
 
 // Variable definiton
-const cellsHorizontal = 3;
-const cellsVertical = 3;
+const cellsHorizontal = 6;
+const cellsVertical = 4;
 width = window.innerWidth;
 height = window.innerHeight;
 
