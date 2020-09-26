@@ -12,6 +12,9 @@ width = 800;
 height = 600;
 cells = 3;
 
+// Length of the cell
+const unitLength = width / cells;
+
 
 // Create the engine
 const engine = Engine.create();
@@ -45,7 +48,6 @@ World.add(world, walls);
 
 
 // Maze generazion
-
 const shuffle = (arr) => {
     let counter = arr.length;
 
@@ -72,6 +74,7 @@ const horizontals = Array(cells - 1).fill(null).map(() => Array(cells).fill(fals
 
 const startRow = Math.floor(Math.random() * cells);
 const startColumn = Math.floor(Math.random() * cells);
+
 
 const movingThrougCells = (row, column) => {
     // If we already visited this cells at [row, column], then return 
@@ -132,6 +135,27 @@ const movingThrougCells = (row, column) => {
 };
 
 movingThrougCells(startRow, startColumn);
+
+// Generating horizontals walls randomly
+horizontals.forEach((row, rowIndex) => {
+    // console.log(row);
+    row.forEach((open, columnIndex) => {
+        if (open){
+            return;
+        }
+
+        const wall = Bodies.rectangle(
+            columnIndex * unitLength + unitLength / 2,
+            rowIndex * unitLength + unitLength,
+            unitLength,
+            10,
+            {
+                isStatic: true
+            }
+        );
+        World.add(world, wall);
+    });
+});
 
 
 
