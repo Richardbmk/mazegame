@@ -8,9 +8,9 @@ const {
  } = Matter;
 
 // Variable definiton
-width = 800;
+width = 600;
 height = 600;
-cells = 3;
+cells = 10;
 
 // Length of the cell
 const unitLength = width / cells;
@@ -125,20 +125,18 @@ const movingThrougCells = (row, column) => {
             } else if (direction === 'down') {
                 horizontals[row][column] = true;
             }
-            movingThrougCells(startRow, startColumn);
+            movingThrougCells(nextRow, nextColumn);
         }
-
-        // Visit that next cell
-    
-
     // console.log(neighbors);
 };
 
 movingThrougCells(startRow, startColumn);
 
+
+
 // Generating horizontals walls randomly
 horizontals.forEach((row, rowIndex) => {
-    // console.log(row);
+    console.log(row);
     row.forEach((open, columnIndex) => {
         if (open){
             return;
@@ -149,6 +147,34 @@ horizontals.forEach((row, rowIndex) => {
             rowIndex * unitLength + unitLength,
             unitLength,
             10,
+            {
+                isStatic: true
+            }
+        );
+        World.add(world, wall);
+    });
+});
+
+
+
+
+
+
+
+
+// Generating verticals walls randomly
+verticals.forEach((row, rowIndex) => {
+    console.log(row, rowIndex);
+    row.forEach((open, columnIndex) => {
+        if(open) {
+            return;
+        }
+
+        const wall = Bodies.rectangle(
+            columnIndex * unitLength + unitLength,
+            rowIndex * unitLength + unitLength / 2,
+            10,
+            unitLength,
             {
                 isStatic: true
             }
