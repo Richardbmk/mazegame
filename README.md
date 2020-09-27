@@ -4,7 +4,7 @@ A Maze game using Matter.js to generate the shapes and efects.
 
 To move the ball use:
 
-![](moving.JPG)
+![](moving.png)
 
 
 ##### In this project I learn about:
