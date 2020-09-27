@@ -2,6 +2,11 @@
 
 A Maze game using Matter.js to generate the shapes and efects. 
 
+To move the ball use:
+
+![](moving.JPG)
+
+
 ##### In this project I learn about:
 * To use the library Matter.js
 * Generate a maze randomly
@@ -10,7 +15,7 @@ A Maze game using Matter.js to generate the shapes and efects.
 * Refactoring the code to generate any type of maze
 
 
-Check the simple app clicking [here](http://moviefightapp.s3-website-us-east-1.amazonaws.com/).
+Check the simple app clicking [here](https://richardbmk.github.io/mazegame/).
 
 
 ![](maze.JPG)
